@@ -1,5 +1,4 @@
 open BaseTypes
-open Fetch
 
 type pageState<'t> =
     | PageLoading

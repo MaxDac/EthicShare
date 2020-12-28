@@ -1,9 +1,56 @@
 .default-container {
     max-width: 1024px;
     margin: 0 auto;
+    text-align: center;
+}
+
+.centered-compact-container {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.padded-card { 
+  padding: 20px;
+}
+
+.form-control-container-lateral {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.form-control-container {
+  padding-top: 15px;
+}
+
+.form-control-container-label {
+  padding-bottom: 15px;
 }
 
 .menu-logo-image {
     max-width: 35px;
     height: auto;
+}
+
+.offcanvas-header{ display:none; }
+
+@media (max-width: 992px) {
+  .offcanvas-header{ display:block; }
+  .navbar-collapse {
+    position: fixed;
+    top:0; 
+    bottom: 0;
+    left: 100%;
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    overflow-y: auto;
+    visibility: hidden;
+    background-color: black;
+    transition: visibility .2s ease-in-out, -webkit-transform .2s ease-in-out;
+  }
+  .navbar-collapse.show {
+    visibility: visible;
+    transform: translateX(-100%);
+  }
 }

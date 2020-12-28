@@ -7,5 +7,7 @@ module Button = {
         ~onClick: () => unit=?,
         ~size: string=?, 
         ~active: bool=?,
+        ~disabled: bool=?,
+        ~\"type": string=?,
         ~children: React.element=?) => React.element = "default"
 }

@@ -9,3 +9,9 @@ let getOrElse = (default, value) =>
     | None => default
     | Some(v) => v
     }
+
+let noneIfEmpty: string => option<string> = s =>
+    switch s {
+    | "" => None
+    | v => Some(v)
+    }

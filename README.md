@@ -1,1 +1,1 @@
-# EthicShare.Umbrella
+# EthicShare project

@@ -16,4 +16,4 @@ type post = {
 }
 
 let getPosts: () => Js.Promise.t<apiResponse<array<post>>> =
-    () => Fetch.fetch(Get(`http://localhost:4000/api/posts`))
+    () => Fetch.fetch(Get(`/api/posts`))
