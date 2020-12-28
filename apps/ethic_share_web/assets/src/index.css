@@ -1,0 +1,9 @@
+.default-container {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.menu-logo-image {
+    max-width: 35px;
+    height: auto;
+}

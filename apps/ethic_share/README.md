@@ -1,0 +1,3 @@
+# EthicShare
+
+**TODO: Add description**

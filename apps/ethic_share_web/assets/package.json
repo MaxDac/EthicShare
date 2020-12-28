@@ -1,0 +1,53 @@
+{
+  "name": "ethic-share-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.6.0",
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "popper": "^1.0.1",
+    "popper.js": "^1.16.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "reactstrap": "^8.8.0",
+    "reason-react": "^0.9.1",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "jquery": "cp ./node_modules/jquery/dist/jquery.min.js ./public/js/jquery.min.js",
+    "popper": "cp ./node_modules/popper.js/dist/popper.min.js ./public/js/popper.min.js",
+    "bootstrap": "cp ./node_modules/bootstrap/dist/js/bootstrap.min.js ./public/js/bootstrap.min.js",
+    "inst": "npm install && npm run jquery && npm run popper && npm run bootstrap",
+    "start": "BASE_URL=http://localhost:4000 react-scripts start",
+    "build": "bsb -make-world && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "watch": "bsb -make-world -w",
+    "clean": "bsb -clean-world"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "bs-platform": "^8.4.2"
+  }
+}
