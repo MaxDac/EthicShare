@@ -22,24 +22,11 @@ module PageStateManager = (Item: PageStateItem) => {
 
     let usePageState: unit => (tStateGetter, tStateSetter) = () => React.useState(defaultPageState)
 
-    let effectDelegate: tStateSetter => tUseEffectDelegate = setter =>{
-        Item.rehidrate()
-        |> Js.Promise.then_(el => {
-            Js.log(el)
-
-            switch el {
-            | Ok(posts) => setter(_ => PageLoaded(posts))
-            | Error(e) => setter(_ => PageWithError(e))
-            }
-
-            Js.Promise.resolve()
-        })
-        |> Js.Promise.catch(error => {
-            Js.log(error)
-            setter(_ => PageWithError([]))
-            Js.Promise.resolve()
-        })
-        |> ignore
+    let effectDelegate: tStateSetter => tUseEffectDelegate = setter => {
+        Fetch.manageApiResponse(
+            Item.rehidrate, 
+            posts => setter(_ => PageLoaded(posts)),
+            e => setter(_ => PageWithError(e)))
 
         None
     }

@@ -4,6 +4,12 @@ let map = (mapDelegate, element) =>
     | Some(v) => Some(mapDelegate(v))
     }
 
+let get: (option<'t>) => 't = t =>
+    switch t {
+    | None => Js.Exn.raiseError("The object does not exist")
+    | Some(v) => v
+    }
+
 let getOrElse = (default, value) =>
     switch value {
     | None => default

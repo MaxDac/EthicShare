@@ -1,5 +1,5 @@
 module Button = {
-    @bs.module("../../node_modules/reactstrap/lib/Button.js")
+    @bs.module("../../../node_modules/reactstrap/lib/Button.js")
     @react.component
     external make: (
         ~className: string=?,

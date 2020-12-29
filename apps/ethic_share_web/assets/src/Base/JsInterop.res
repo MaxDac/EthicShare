@@ -13,7 +13,20 @@
 
         return {};
     }
+
+    const fastClone = function(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
+
+    const addProperty = function(name, value, obj) {
+        let cloned = fastClone(obj);
+        cloned[name] = value;
+        return cloned;
+    }
 `)
 
 @bs.val
 external checkIfNullAndReturnEmptyObject: 't => {..} = "checkIfNullAndReturnEmptyObject"
+
+@bs.val
+external addProperty: (string, 't, {..}) => {..} = "addProperty"

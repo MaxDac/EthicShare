@@ -12,7 +12,7 @@ defmodule EthicShareWeb.Router do
     get "/user/:id", UserController, :show
     post "/user", UserController, :create
 
-    post "authenticate", AuthenticationController, :authenticate
+    post "/authenticate", AuthenticationController, :authenticate
 
     get "/posts", PostController, :index
     get "/post/:id", PostController, :show

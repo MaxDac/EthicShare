@@ -6,7 +6,7 @@ type apiResponse<'t> =
 
 type fetchRequest<'t> = 
     | Get(string)
-    | Post(string, apiResponse<'t>)
+    | Post(string, 't)
 
 let emptyElement: React.element = <></>
 
