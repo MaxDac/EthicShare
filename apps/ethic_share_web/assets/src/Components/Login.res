@@ -1,5 +1,5 @@
 open JsInterop
-open BootstrapButton
+open BootstrapImports
 open FormikImports
 open LoginService
 open BaseTypes
@@ -14,6 +14,9 @@ type formValues = {
 
 @react.component
 let make = () => {
+    let (showAlert, setShowAlert) = React.useState(() => false);
+    let (alertText, setAlertText) = React.useState(() => "");
+
     let initialValues: formValues = {
         "email": "",
         "password": ""
@@ -52,9 +55,15 @@ let make = () => {
             setSubmitting(false)
         }
 
-        let handleError = e => {
-            Js.log("error!")
-            Js.log(e)
+        let handleError: array<string> => unit = e => {
+            let error = 
+                e
+                |> Array.to_list
+                |> List.filter(e => e != "")
+                |> List.fold_right()
+
+            setAlertText(_ => e |> join)
+            setShowAlert(_ => true)
             setSubmitting(false)
         }
 
@@ -63,6 +72,11 @@ let make = () => {
     }
 
     <div className="centered-compact-container">
+        <div className="padded-alert">
+            <Alert color="danger" isOpen={showAlert} toggle={() => setShowAlert(_ => false)}>
+                {React.string({alertText})}
+            </Alert>
+        </div>
         <h3>{React.string("Login into the application!")}</h3>
         <FormContainer 
             initialValues={initialValues} 
