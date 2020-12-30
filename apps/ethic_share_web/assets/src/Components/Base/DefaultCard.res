@@ -1,6 +1,8 @@
 open BaseTypes
 open BootstrapCard
 
+@@warning("-27")
+
 @react.component
 let make = (
     ~title: string,

@@ -48,7 +48,7 @@ let make = () => {
                 password: v["password"]
             })
 
-        let handleOk = (res) => {
+        let handleOk = (_) => {
             setSubmitting(false)
         }
 
