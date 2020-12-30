@@ -30,3 +30,10 @@ external checkIfNullAndReturnEmptyObject: 't => {..} = "checkIfNullAndReturnEmpt
 
 @bs.val
 external addProperty: (string, 't, {..}) => {..} = "addProperty"
+
+@bs.val
+external showSimpleAlert: string => unit = "alert"
+
+@bs.val
+@bs.scope("JSON")
+external stringify: 'a => string = "stringify"

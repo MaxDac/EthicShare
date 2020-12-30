@@ -1,6 +1,6 @@
 open BaseTypes
 open PageUtils
-open BootstrapButton
+open BootstrapImports
 open BootstrapCard
 open PostsService
 
