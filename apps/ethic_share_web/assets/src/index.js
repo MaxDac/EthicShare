@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 const App = require("./App.bs").make;
 const Login = require("./Components/Login.bs").make;
+const CreateUser = require("./Components/CreateUser.bs").make;
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,6 +14,9 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/createuser">
+          <CreateUser />
         </Route>
         <Route path="/">
           <App />

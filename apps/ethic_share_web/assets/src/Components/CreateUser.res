@@ -8,8 +8,10 @@ open FormUtils
 open FormContainer
 
 type formValues = {
+    "username": string,
     "email": string,
-    "password": string
+    "password": string,
+    "repeatedPassword": string,
 }
 
 @react.component
@@ -18,11 +20,17 @@ let make = () => {
     let (alertText, setAlertText) = React.useState(() => "");
 
     let initialValues: formValues = {
+        "username": "",
         "email": "",
-        "password": ""
+        "password": "",
+        "repeatedPassword": ""
     }
 
     let formProperties = [
+        {
+            name: "username",
+            _type: "username"
+        },
         {
             name: "email",
             _type: "email"
@@ -30,6 +38,10 @@ let make = () => {
         {
             name: "password",
             _type: "password"
+        },
+        {
+            name: "repeatedPassword",
+            _type: "repeatedPassword"
         }
     ]
 
@@ -37,9 +49,11 @@ let make = () => {
         open Validator
         
         container()
+        |> Validator.checkNotNull(values["username"] |> Option.noneIfEmpty, "username")
         |> Validator.checkNotNull(values["email"] |> Option.noneIfEmpty, "email")
         |> Validator.checkEmailFormat(values["email"], "email")
         |> Validator.checkNotNull(values["password"] |> Option.noneIfEmpty, "password")
+        |> Validator.checkEquals(values["password"], values["repeatedPassword"], "repeatedPassword")
         |> checkIfNullAndReturnEmptyObject
     }
 
@@ -77,7 +91,7 @@ let make = () => {
                 {React.string({alertText})}
             </Alert>
         </div>
-        <h3>{React.string("Login into the application!")}</h3>
+        <h3>{React.string("Create the new user!")}</h3>
         <FormContainer 
             initialValues={initialValues} 
             properties={formProperties}

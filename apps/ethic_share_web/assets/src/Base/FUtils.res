@@ -24,18 +24,77 @@ let fold_right: (('b, 'a) => 'a, 'a, list<'b>) => 'a = (f, init, ls) => {
 
     ls
     |> reverse
-    |> fold_left(f, init)
+    |> fold_left(f1, init)
 }
 
 let filter: ('t => bool, list<'t>) => list<'t> = (f, lss) => {
-    let filter_reducer: ('t, list<'t>) => list<'t> = (element: 't, ls: list<'t>) => {
-        switch f(element) {
-        | true => list{element, ...ls}
-        | false => ls
+    let rec filter_internal = (acc, ls) => 
+        switch ls {
+        | list{} => acc
+        | list{x, ...xs} => 
+            switch f(x) {
+            | true => filter_internal(list{x, ...acc}, xs)
+            | _ => filter_internal(acc, xs)
+            }
         }
+
+    lss
+    |> filter_internal(list{})
+    |> reverse
+}
+
+let stringToList: string => list<string> = str => {
+    let rec string_to_list: (list<string>, string) => list<string> = (acc, s) =>
+    switch s {
+    | "" => acc
+    | str =>
+        string_to_list(
+        list{String.sub(str, 0, 1), ...acc},
+        String.sub(str, 1, (str |> String.length) - 1),
+        )
     }
 
-    let ret: list<'t> = fold_right(filter_reducer, list{}, lss)
+    string_to_list(list{}, str)
+}
 
-    
+let listToString : list<string> => string = ls => {
+    let rec list_to_string: (string, list<string>) => string = (acc, lss) => 
+        switch lss {
+        | list{} => acc
+        | list{x, ...xs } =>
+            list_to_string(`${acc}${x}`, xs)
+        }
+
+    list_to_string("", ls)
+}
+
+let getStringTail: string => string = s => String.sub(s, 1, String.length(s) - 1)
+
+let getStringHead: string => string = s => String.sub(s, 0, 1)
+
+let firstCapital: string => string = s => {
+    let head = s |> getStringHead |> String.uppercase_ascii
+    let tail = s |> getStringTail
+
+    return `${head}${tail}`
+}
+
+let camelCaseToNormalCase: string => string = s => {
+    let rec transform = (acc, ls) =>
+        switch ls {
+        | list{} => acc
+        | list{c, ...cs} =>
+            if (c |> String.uppercase_ascii) == c {
+                transform(list{" ", c, ...acc}, cs)
+            }
+            else {
+                transform(list{c, ...acc}, cs)
+            }
+        }
+
+    s 
+    |> stringToList
+    |> transform(list{})
+    |> listToString
+    |> firstCapital
 }

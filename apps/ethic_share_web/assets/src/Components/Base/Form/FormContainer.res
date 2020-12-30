@@ -16,14 +16,14 @@ let make = (
     ~onFormSubmit: ('t, formikSubmitEvent) => unit) => {
 
     let fieldFromProperty = (p: formFieldProperty) => {
-        <>
+        <div key={p.name}>
             <FormControl>
                 <Field \"type"={p._type} name={p.name} className="form-control bg-dark text-white" />
             </FormControl>
             <FormControlMessage>
                 <ErrorMessage name={p.name} component="div" />
             </FormControlMessage>
-        </>
+        </div>
     }
     
     let fields = 
