@@ -9,60 +9,36 @@ open FormContainer
 
 @react.component
 let make = (
-    ~initialValues: option<'t>=?,
-    ~initialValuesGetter: option<() => Js.Promise.t<'t>>=?,
+    ~initialValues: 't,
     ~formProperties: array<formFieldProperty>,
     ~formValidation: 't => {..},
-    ~saveDelegate: 't => Js.Promise.t<apiResponse<'q>>
+    ~saveDelegate: 't => Js.Promise.t<apiResponse<'q>>,
+    ~onSaveOk: 'q => unit
 ) => {
-    let (formModel, setFormModel) = React.useState(() => None)
     let (showAlert, setShowAlert) = React.useState(() => false)
     let (alertText, setAlertText) = React.useState(() => "")
 
-    let handleError: array<string> => unit = e => {
-        let error: string = 
-            e
-            |> Array.to_list
-            |> List.filter(e => e != "")
-            |> FUtils.fold_right((el: string, acc: string) => `${acc},\n"${el}`, "")
+    let handleError: (bool => unit) => (array<string> => unit) = 
+        setSubmitting => 
+            e => {
+                let error: string = 
+                    e
+                    |> Array.to_list
+                    |> List.filter(e => e != "")
+                    |> FUtils.fold_right((el: string, acc: string) => `${acc},\n"${el}`, "")
 
-        setAlertText(_ => error)
-        setShowAlert(_ => true)
-        setSubmitting(false)
-    }
-
-    React.useEffect0(() => {
-        switch (initialValues, initialValuesGetter) {
-        | (None, None) =>
-            setAlertText(_ => "No model nor getter defined.")
-            setShowAlert(_ => true)
-        | (Some(value), _) =>
-            setFormModel(_ => value)
-        | (_, Some(getter)) =>
-            getter()
-            |> Js.Promise.then_(model => {
-                switch model {
-                | Ok(value) => setFormModel(-value)
-                | Error(error) => handleError(error)
-                }
-            })
-            |> Js.Promise.catch(handleError)
-        }
-    })
+                setAlertText(_ => error)
+                setShowAlert(_ => true)
+                setSubmitting(false)
+            }
 
     let onFormSubmit: ('t, formikSubmitEvent) => unit = (values, { setSubmitting }) => {
-
-        let handleOk = (_) => {
+        let okHandler = res => {
             setSubmitting(false)
+            onSaveOk(res)
         }
 
-            setAlertText(_ => error)
-            setShowAlert(_ => true)
-            setSubmitting(false)
-        }
-
-        Fetch.manageApiResponse(() => saveDelegate(values), handleOk, handleError)
-
+        Fetch.manageApiResponse(() => saveDelegate(values), okHandler, handleError(setSubmitting))
     }
 
     <div className="centered-compact-container">
@@ -75,7 +51,7 @@ let make = (
         <FormContainer 
             initialValues={initialValues} 
             properties={formProperties}
-            validator={formModel} 
+            validator={formValidation} 
             onFormSubmit={onFormSubmit} />
     </div>
 }

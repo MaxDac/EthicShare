@@ -1,3 +1,12 @@
+module Label = {
+    @bs.module("../../../node_modules/reactstrap/lib/Label.js")
+    @react.component
+    external make: (
+        ~\"for": string,
+        ~children: React.element
+    ) => React.element = "default"
+}
+
 module Button = {
     @bs.module("../../../node_modules/reactstrap/lib/Button.js")
     @react.component

@@ -25,11 +25,13 @@ let make = () => {
     let formProperties = [
         {
             name: "email",
-            _type: "email"
+            _type: "email",
+            label: "Email"
         },
         {
             name: "password",
-            _type: "password"
+            _type: "password",
+            label: "Password"
         }
     ]
 

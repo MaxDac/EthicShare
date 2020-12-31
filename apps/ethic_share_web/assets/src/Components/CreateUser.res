@@ -16,8 +16,6 @@ type formValues = {
 
 @react.component
 let make = () => {
-    let (showAlert, setShowAlert) = React.useState(() => false);
-    let (alertText, setAlertText) = React.useState(() => "");
 
     let initialValues: formValues = {
         "username": "",
@@ -29,19 +27,23 @@ let make = () => {
     let formProperties = [
         {
             name: "username",
-            _type: "username"
+            _type: "username",
+            label: "Username"
         },
         {
             name: "email",
-            _type: "email"
+            _type: "email",
+            label: "Email"
         },
         {
             name: "password",
-            _type: "password"
+            _type: "password",
+            label: "Password"
         },
         {
             name: "repeatedPassword",
-            _type: "repeatedPassword"
+            _type: "repeatedPassword",
+            label: "Repeat Password"
         }
     ]
 
@@ -57,45 +59,20 @@ let make = () => {
         |> checkIfNullAndReturnEmptyObject
     }
 
-    let onFormSubmit: (formValues, formikSubmitEvent) => unit = (values, { setSubmitting }) => {
+    let performLoginDelegate = (v: formValues) =>
+        performLogin({
+            username: v["email"],
+            password: v["password"]
+        })
 
-        let performLoginDelegate = (v: formValues) =>
-            () => performLogin({
-                username: v["email"],
-                password: v["password"]
-            })
-
-        let handleOk = (_) => {
-            setSubmitting(false)
-        }
-
-        let handleError: array<string> => unit = e => {
-            let error: string = 
-                e
-                |> Array.to_list
-                |> List.filter(e => e != "")
-                |> FUtils.fold_right((el: string, acc: string) => `${acc},\n"${el}`, "")
-
-            setAlertText(_ => error)
-            setShowAlert(_ => true)
-            setSubmitting(false)
-        }
-
-        Fetch.manageApiResponse(performLoginDelegate(values), handleOk, handleError)
-
+    let handleOk = (res) => {
+        Js.log(res)
     }
 
-    <div className="centered-compact-container">
-        <div className="padded-alert">
-            <Alert color="danger" isOpen={showAlert} toggle={() => setShowAlert(_ => false)}>
-                {React.string({alertText})}
-            </Alert>
-        </div>
-        <h3>{React.string("Create the new user!")}</h3>
-        <FormContainer 
-            initialValues={initialValues} 
-            properties={formProperties}
-            validator={formValidation} 
-            onFormSubmit={onFormSubmit} />
-    </div>
+    <DefaultForm
+        initialValues={initialValues}
+        formProperties={formProperties}
+        formValidation={formValidation}
+        saveDelegate={performLoginDelegate}
+        onSaveOk={handleOk} />
 }

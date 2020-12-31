@@ -1,10 +1,21 @@
+open BootstrapImports
 open FormikImports
 
 @react.component
-let make = (~\"type": string, ~name: string) => {
+let make = (~\"type": string, ~name: string, ~label: string) => {
     <>
         <FormControl>
-            <Field \"type"={\"type"} name={name} className="form-control bg-dark text-white" />
+            <Label \"for"={name}>
+                {React.string(label)}
+            </Label>
+        </FormControl>
+        <FormControl>
+            <Field 
+                \"type"={\"type"} 
+                name={name} 
+                id={name}
+                placeholder={label}
+                className="form-control bg-dark text-white" />
         </FormControl>
         <FormControlMessage>
             <ErrorMessage name={name} component="div" />

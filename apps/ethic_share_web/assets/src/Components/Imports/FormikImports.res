@@ -32,7 +32,9 @@ module Field = {
     external make: (
         ~name: string,
         ~\"type": string,
+        ~id: string=?,
         ~className: string=?,
+        ~placeholder: string=?,
         ~children: React.element=?) => React.element = "Field"
 }
 

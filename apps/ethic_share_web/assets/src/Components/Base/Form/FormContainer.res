@@ -5,7 +5,8 @@ open FormControlMessage
 
 type formFieldProperty = {
     _type: string,
-    name: string
+    name: string,
+    label: string
 }
 
 @react.component
@@ -17,12 +18,10 @@ let make = (
 
     let fieldFromProperty = (p: formFieldProperty) => {
         <div key={p.name}>
-            <FormControl>
-                <Field \"type"={p._type} name={p.name} className="form-control bg-dark text-white" />
-            </FormControl>
-            <FormControlMessage>
-                <ErrorMessage name={p.name} component="div" />
-            </FormControlMessage>
+            <FormField
+                \"type"={p._type}
+                name={p.name}
+                label={p.label} />
         </div>
     }
     
