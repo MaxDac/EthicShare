@@ -1,4 +1,5 @@
-open BaseTypes
+open EthicShareBase.BaseTypes
+open EthicShareBase.Fetch
 
 type post = {
     id: int,
@@ -8,4 +9,4 @@ type post = {
 }
 
 let getPosts: () => Js.Promise.t<apiResponse<array<post>>> =
-    () => Fetch.fetch(Get(`/api/posts`))
+    () => fetch(Get(`/api/posts`))

@@ -1,11 +1,12 @@
-open JsInterop
-open BootstrapImports
-open FormikImports
+open EthicShareBase.JsInterop
+open EthicShareBase.BootstrapImports
+open EthicShareBase.FormikImports
 open LoginService
-open BaseTypes
-open PageUtils
-open FormUtils
-open FormContainer
+open EthicShareBase.BaseTypes
+open EthicShareBase.PageUtils
+open EthicShareBase.FormUtils
+open EthicShareBase.FormContainer
+open EthicShareBase
 
 type formValues = {
     "email": string,
@@ -58,11 +59,11 @@ let make = () => {
         }
 
         let handleError: array<string> => unit = e => {
-            let error: string = 
+            let error = 
                 e
                 |> Array.to_list
                 |> List.filter(e => e != "")
-                |> FUtils.fold_right((el: string, acc: string) => `${acc},\n"${el}`, "")
+                |> List.fold_left((acc, s) => `${s}\n${acc}`, "")
 
             setAlertText(_ => error)
             setShowAlert(_ => true)
