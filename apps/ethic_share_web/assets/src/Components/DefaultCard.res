@@ -1,5 +1,6 @@
-open BaseTypes
-open BootstrapCard
+open EthicShareBase.BaseTypes
+open EthicShareBase.BootstrapCard
+open EthicShareBase
 
 @@warning("-27")
 

@@ -1,7 +1,8 @@
-open BaseTypes
-open PageUtils
-open BootstrapImports
-open BootstrapCard
+open EthicShareBase.BaseTypes
+open EthicShareBase.PageUtils
+open EthicShareBase.BootstrapImports
+open EthicShareBase.BootstrapCard
+open EthicShareBase
 open PostsService
 
 @react.component
@@ -27,7 +28,7 @@ let make = () => {
     <div className="default-container">
         <div>{React.string("this is the first text")}</div>
         <div>
-            <Button 
+            <Button
                 color="primary" 
                 onClick={() => Js.log("Test")}
                 active={true}>

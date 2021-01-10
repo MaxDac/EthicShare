@@ -1,4 +1,5 @@
-open BaseTypes
+open EthicShareBase.BaseTypes
+open EthicShareBase.Fetch
 
 type loginRequest = {
     username: string,
@@ -13,4 +14,4 @@ type user = {
 }
 
 let performLogin: loginRequest => Js.Promise.t<apiResponse<user>> =
-    req => Fetch.fetch(Post(`/api/authenticate`, req))
+    req => fetch(Post(`/api/authenticate`, req))
